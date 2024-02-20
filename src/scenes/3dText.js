@@ -32,7 +32,7 @@ export default class ThreeDTextScene extends Engine {
     this.torus.position.z = -2;
     this.torus.position.y = 1.4;
     this.scene.add(this.torus);
-    
+
 
     const randomPosition = () => {
       var x = Math.random() * 200 - 100;
@@ -86,7 +86,7 @@ export default class ThreeDTextScene extends Engine {
 
       this.textGeometry.center();
 
-      this.textMaterial = new Three.MeshNormalMaterial({ wireframe: true });
+      this.textMaterial = new Three.MeshNormalMaterial({ wireframe: false });
       this.text = new Three.Mesh(this.textGeometry, this.textMaterial);
       this.scene.add(this.text);
     });
