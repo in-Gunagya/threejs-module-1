@@ -39,7 +39,9 @@ export default class ThreeDTextScene extends Engine {
       return x;
     };
     this.tempGeometry = new Three.TorusGeometry(0.8, 0.2, 16, 32)
-    this.tempMaterial = new Three.MeshBasicMaterial({map:this.commonTexture})
+    this.tempMaterial = new Three.MeshStandardMaterial({map:this.commonTexture})
+    this.tempMaterial.metalness = 1
+    this.tempMaterial.roughness = 0
     for (let i = 0; i < 100; i++) {
       let randomScale = Math.random() * 20;
       this.newTorus = new Three.Mesh(this.tempGeometry,this.tempMaterial)
@@ -97,7 +99,7 @@ export default class ThreeDTextScene extends Engine {
     this.box.rotation.y += 0.02;
     this.torus.rotation.z += 0.02;
     this.torusArray.forEach((torus) => {
-      torus.rotation.z += Math.random() * 0.25;
+      torus.rotation.z += Math.random() * 0.05;
     });
   }
 }
