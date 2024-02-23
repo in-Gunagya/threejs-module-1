@@ -63,7 +63,7 @@ export default class LightScene extends Engine{
     //rectArea light
     this.rectAreaLight = new Three.RectAreaLight('blue',0,5,5);
     this.scene.add(this.rectAreaLight);
-    this.rectAreaLight.position.set(0,3,5);
+    this.rectAreaLight.position.set(0,5,15);
     this.gui.add(this.rectAreaLight, 'intensity').min(0).max(20).step(1).name("rectAreaLight");
 
 
@@ -72,10 +72,11 @@ export default class LightScene extends Engine{
     this.scene.add(this.rectAreaHelper);
 
     //spot light
-    this.spotLight = new Three.SpotLight('green',0);
+    this.spotLight = new Three.SpotLight('green',0,30,Math.PI*0.1,0.25,1);
     this.scene.add(this.spotLight);
-    this.spotLight.position.set(0,4,-15);
+    this.spotLight.position.set(0,7,-18);
     this.spotLight.target = this.sphere
+    // this.scene.add(this.spotLight.target);
     this.gui.add(this.spotLight, 'intensity').min(0).max(200).step(1).name("spotLight");
 
 
