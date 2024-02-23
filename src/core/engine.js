@@ -20,9 +20,12 @@ export default class Engine {
     this.renderer = new Three.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = Three.PCFSoftShadowMap;
     this.resize();
     this.fullsize();
     this.controls();
+    this.lights()
     this.setup();
   }
 
@@ -64,5 +67,13 @@ export default class Engine {
 
   controls() {
     this.orbitControls = new OrbitControls(this.camera, this.canvas);
+  }
+
+  lights(){
+    this.ambientLight = new Three.AmbientLight('white',0);
+    this.directionalLight = new Three.DirectionalLight('yellow',0.1);
+    this.hemisphereLight = new Three.HemisphereLight('blue',"red",0.5);
+    this.pointLight = new Three.PointLight('green',0.5);
+    this.spotLight = new Three.SpotLight('blue',5,30,Math.PI*0.1,0.25,1);
   }
 }
