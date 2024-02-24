@@ -36,7 +36,7 @@ export default class ShadowScene extends Engine {
       new Three.SphereGeometry(1, 32, 16),
       new Three.MeshStandardMaterial({ map: this.commonTexture })
     );
-    this.sphere2.position.set(2, 3, -3);
+    this.sphere2.position.set(2, 13, -3);
     this.sphere2.receiveShadow = true;
     this.sphere2.castShadow = true;
     this.scene.add(this.sphere2);
@@ -154,6 +154,7 @@ export default class ShadowScene extends Engine {
     this.elappsed = this.clock.getElapsedTime();
     this.sphere2.position.x = Math.cos(this.elappsed) * 5
     this.sphere2.position.z = Math.sin(this.elappsed) * 5
+    this.sphere2.position.y = Math.abs(Math.sin(this.elappsed * 3)) * 5
     this.sphere2.rotation.x += 0.04;
   }
 }
