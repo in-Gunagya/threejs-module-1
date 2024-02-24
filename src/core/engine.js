@@ -71,9 +71,9 @@ export default class Engine {
 
   lights(){
     this.ambientLight = new Three.AmbientLight('white',0);
-    this.directionalLight = new Three.DirectionalLight('yellow',0.1);
+    this.directionalLight = new Three.DirectionalLight('yellow',0.03);
     this.hemisphereLight = new Three.HemisphereLight('blue',"red",0.5);
-    this.pointLight = new Three.PointLight('green',0.5);
-    this.spotLight = new Three.SpotLight('blue',5,30,Math.PI*0.1,0.25,1);
+    this.pointLight = new Three.PointLight('green',0,50);
+    this.spotLight = new Three.SpotLight('blue',0,30,Math.PI*0.1,0.25,1);
   }
 }
