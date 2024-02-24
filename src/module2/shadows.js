@@ -83,7 +83,8 @@ export default class ShadowScene extends Engine {
     );
     this.gui
       .add(this.directionalLightCameraHelper, "visible")
-      .name("DirectionalLightCameraHelper").setValue(false);
+      .name("DirectionalLightCameraHelper")
+      .setValue(false);
     // this.directionalLightCameraHelper.visible = true;
     this.scene.add(this.directionalLightCameraHelper);
     this.scene.add(this.directionalLight);
@@ -100,8 +101,9 @@ export default class ShadowScene extends Engine {
     this.spotLight.castShadow = true;
     this.spotLight.shadow.mapSize.width = 1024;
     this.spotLight.shadow.mapSize.height = 1024;
+    this.spotLight.shadow.camera.fov = 20;
     this.spotLight.shadow.camera.near = 1;
-    this.spotLight.shadow.camera.far = 8;
+    this.spotLight.shadow.camera.far = 16;
 
     this.spotLight.shadow.radius = 10;
 
@@ -110,7 +112,8 @@ export default class ShadowScene extends Engine {
     );
     this.gui
       .add(this.spotLightCameraHelper, "visible")
-      .name("SpotLightCameraHelper").setValue(false);
+      .name("SpotLightCameraHelper")
+      .setValue(false);
     // this.spotLightCameraHelper.visible = true;
     this.scene.add(this.spotLightCameraHelper);
     this.scene.add(this.spotLight);
@@ -123,7 +126,7 @@ export default class ShadowScene extends Engine {
 
     //point light
     this.pointLight.position.set(0, 8, 0);
-    this.pointLight.lookAt(this.sphere.position)
+    this.pointLight.lookAt(this.sphere.position);
     this.pointLight.castShadow = true;
     this.pointLight.shadow.mapSize.width = 1024;
     this.pointLight.shadow.mapSize.height = 1024;
@@ -134,7 +137,8 @@ export default class ShadowScene extends Engine {
     );
     this.gui
       .add(this.pointLightCameraHelper, "visible")
-      .name("PointLightCameraHelper").setValue(false);
+      .name("PointLightCameraHelper")
+      .setValue(false);
     this.scene.add(this.pointLightCameraHelper);
     this.scene.add(this.pointLight);
     this.gui
@@ -144,8 +148,12 @@ export default class ShadowScene extends Engine {
       .step(0.01)
       .name("pointLight");
     this.camera.position.set(0, 5, 10);
+    this.clock = new Three.Clock();
   }
   update() {
-    this.sphere2.rotation.x += 0.01;
+    this.elappsed = this.clock.getElapsedTime();
+    this.sphere2.position.x = Math.cos(this.elappsed) * 5
+    this.sphere2.position.z = Math.sin(this.elappsed) * 5
+    this.sphere2.rotation.x += 0.04;
   }
 }
