@@ -1,4 +1,4 @@
-import Scene from "./module2/shadows";
+import Scene from "./hidr8/hidr8";
 
 window.addEventListener("DOMContentLoaded", () => {
   const canvas = document.querySelector("canvas.webgl");
