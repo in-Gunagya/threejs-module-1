@@ -13,7 +13,7 @@ export default class Engine {
     this.scene = new Three.Scene();
    
     this.camera = new Three.PerspectiveCamera(
-      30,
+      75,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
@@ -68,7 +68,11 @@ export default class Engine {
 
   controls() {
     this.orbitControls = new OrbitControls(this.camera, this.canvas);
-    this.orbitControls.enableDamping = false
+    // this.orbitControls.enableDamping = true;
+    this.orbitControls.maxPolarAngle = Math.PI * 0.49;
+    this.orbitControls.maxDistance = 9;
+    this.orbitControls.minDistance = 3;
+
   }
 
   lights(){

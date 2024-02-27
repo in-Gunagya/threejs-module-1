@@ -26,8 +26,7 @@ export default class Hidr8Scene extends Engine {
     this.gltfLoader.setDRACOLoader(this.dracoloader);
     this.gltfLoader.load("Hidr8/myAssembly7.glb", (bottle) => {
       this.bottleModel = bottle.scene;
-      console.log(bottle);
-      console.log(this.bottleModel);
+      this.bottleModel.scale.set(4,4,4)
       this.directionalLight.position.set(0, 7, 2);
       this.directionalLight.target = this.bottleModel;
       this.scene.add(this.directionalLight);
@@ -50,6 +49,7 @@ export default class Hidr8Scene extends Engine {
             } else {
               material.metalness = 1;
               material.roughness = 0.4;
+              material.flatShading = true;
             }
           }
         }
@@ -69,8 +69,10 @@ export default class Hidr8Scene extends Engine {
             }
             else{
               material.map = texture;
-            // texture.colorSpace = Three.SRGBColorSpace;
+            texture.colorSpace = Three.SRGBColorSpace;
             texture.minFilter = Three.NearestFilter;
+            texture.migFilter = Three.NearestFilter;
+            texture.generateMipmaps = false
             }
           }
         }
@@ -100,7 +102,8 @@ export default class Hidr8Scene extends Engine {
       });
 
       this.scene.add(this.bottleModel);
-      this.camera.position.set(0, 2, 2);
+      this.camera.position.set(0,5,7)
+      this.camera.lookAt(this.bottleModel)
     });
   }
 
