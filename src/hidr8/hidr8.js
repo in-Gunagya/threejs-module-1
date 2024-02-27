@@ -2,64 +2,92 @@ import * as Three from "three";
 import Engine from "../core/engine";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader'
-
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
 export default class Hidr8Scene extends Engine {
   setup() {
-    // this.scene.background = new Three.Color("grey");
     this.rgbeLoader = new RGBELoader();
     this.rgbeLoader.load("/texture/Environment/img1.hdr", (env) => {
-      env.mapping = Three.EquirectangularRefractionMapping;
+      env.mapping = Three.EquirectangularReflectionMapping;
       this.scene.background = env;
       this.scene.environment = env;
     });
     this.animations = null;
     this.clock = new Three.Clock();
 
-    this.floor = new Three.Mesh(new Three.PlaneGeometry(10,10),new Three.MeshStandardMaterial({color:'red'}));
-    this.floor.rotation.x = - Math.PI * 0.5
-    this.scene.add(this.floor);
-
     this.scene.add(this.ambientLight);
 
     // Load GLTF model
     this.gltfLoader = new GLTFLoader();
     this.dracoloader = new DRACOLoader();
-    this.dracoloader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    this.dracoloader.setDecoderPath(
+      "https://www.gstatic.com/draco/versioned/decoders/1.5.7/"
+    );
     this.gltfLoader.setDRACOLoader(this.dracoloader);
     this.gltfLoader.load("Hidr8/myAssembly7.glb", (bottle) => {
       this.bottleModel = bottle.scene;
-      this.bottleModel.position.set(0, -0.1, 0);
-      this.bottleModel.scale.set(10, 10, 10);
-      this.scene.add(this.bottleModel);
-
-      // Set up lights
-      this.directionalLight.position.set(0, 5, 0);
-      this.directionalLight1.position.set(0, 0, 5);
+      console.log(bottle);
+      console.log(this.bottleModel);
+      this.directionalLight.position.set(0, 7, 2);
       this.directionalLight.target = this.bottleModel;
+      this.scene.add(this.directionalLight);
+      this.directionalLight1.position.set(0, 1, 5);
       this.directionalLight1.target = this.bottleModel;
-      // this.scene.add(this.directionalLight);
-      // this.scene.add(this.directionalLight1);
+      this.scene.add(this.directionalLight1);
 
-      // Initialize animation mixer
+      this.bottleModel.traverse((child) => {
+        if (child.isMesh) {
+          const material = child.material;
+          if (material) {
+            // Check if the mesh belongs to the "infuser" part
+            if (child.name === "Infuser_(1)" || child.name === "Hidr8") {
+              const infuserMaterial = new Three.MeshStandardMaterial({
+                color: material.color,
+                metalness: material.metalness,
+                roughness: material.roughness,
+              });
+              child.material = infuserMaterial;
+            } else {
+              material.metalness = 1;
+              material.roughness = 0.4;
+            }
+          }
+        }
+      });
+
+      const textureLoader = new Three.TextureLoader();
+      const texture = textureLoader.load("/texture/Other/8x8_checkered_board_.svg.png");
+      let count = 0;
+      this.bottleModel.traverse((child) => {
+        if(count >= 5) return;
+        if (child.isMesh) {
+          const material = child.material;
+          count++;
+          if (material) {
+            if (child.name === "Infuser_(1)" || child.name === "Hidr8" || child.name === "pcb") {
+               
+            }
+            else{
+              material.map = texture;
+            // texture.colorSpace = Three.SRGBColorSpace;
+            texture.minFilter = Three.NearestFilter;
+            }
+          }
+        }
+      });
+
+      // animations section
       this.animations = new Three.AnimationMixer(this.bottleModel);
       const clips = bottle.animations;
-      
-      // Array to hold all animation actions
       const actions = [];
-
-      // Get animation clips
       const clipNames = [
         "bottom (1)Action",
         "topAnimation",
         "middleAnimation",
         "infuserAnimation",
         "hidr8Animation",
-        "pcbAnimation"
+        "pcbAnimation",
       ];
-
-      // Create and play animation actions for each clip
       clipNames.forEach((clipName) => {
         const clip = Three.AnimationClip.findByName(clips, clipName);
         if (clip) {
@@ -71,8 +99,8 @@ export default class Hidr8Scene extends Engine {
         }
       });
 
-      this.camera.position.set(0,5,15)
-      this.camera.lookAt(this.bottleModel.position)
+      this.scene.add(this.bottleModel);
+      this.camera.position.set(0, 2, 2);
     });
   }
 
@@ -81,7 +109,5 @@ export default class Hidr8Scene extends Engine {
     if (this.animations) {
       this.animations.update(delta);
     }
-    console.log(this.camera.position);
   }
 }
-
