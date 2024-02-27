@@ -71,7 +71,7 @@ export default class Hidr8Scene extends Engine {
               material.map = texture;
             texture.colorSpace = Three.SRGBColorSpace;
             texture.minFilter = Three.NearestFilter;
-            texture.migFilter = Three.NearestFilter;
+            texture.magFilter = Three.NearestFilter;
             texture.generateMipmaps = false
             }
           }
@@ -102,9 +102,8 @@ export default class Hidr8Scene extends Engine {
       });
 
       this.scene.add(this.bottleModel);
-      this.camera.position.set(0,5,7)
-      this.camera.lookAt(this.bottleModel)
     });
+    this.camera.position.set(0,5,7)
   }
 
   update() {

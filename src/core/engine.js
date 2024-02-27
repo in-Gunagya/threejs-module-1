@@ -68,17 +68,18 @@ export default class Engine {
 
   controls() {
     this.orbitControls = new OrbitControls(this.camera, this.canvas);
-    // this.orbitControls.enableDamping = true;
     this.orbitControls.maxPolarAngle = Math.PI * 0.49;
     this.orbitControls.maxDistance = 9;
     this.orbitControls.minDistance = 3;
-
+    // this.orbitControls.enableRotate = false
+    // this.orbitControls.enableDamping = false;
+    // this.orbitControls.enablePan = false
   }
 
   lights(){
     this.ambientLight = new Three.AmbientLight('white',2);
-    this.directionalLight = new Three.DirectionalLight('white', 10);
-    this.directionalLight1 = new Three.DirectionalLight(0xffffff, 10);
+    this.directionalLight = new Three.DirectionalLight('white', 20,30);
+    this.directionalLight1 = new Three.DirectionalLight("white", 20,30);
     this.hemisphereLight = new Three.HemisphereLight('blue',"red",0.5);
     this.pointLight = new Three.PointLight('green',0,50);
     this.spotLight = new Three.SpotLight('blue',0,30,Math.PI*0.1,0.25,1);
