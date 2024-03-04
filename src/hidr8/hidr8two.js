@@ -9,7 +9,7 @@ export default class Hidr8Scene2 extends Engine {
     this.clock = new Three.Clock();
 
     this.rgbeLoader = new RGBELoader();
-    this.rgbeLoader.load("/texture/Environment/img1.hdr", (env) => {
+    this.rgbeLoader.load("/Hidr8/sky.hdr", (env) => {
       env.mapping = Three.EquirectangularReflectionMapping;
       this.scene.background = env;
       this.scene.environment = env;
@@ -29,7 +29,7 @@ export default class Hidr8Scene2 extends Engine {
       const center = bbox.getCenter(new Three.Vector3());
       this.bottleModel.position.sub(center);
 
-      this.camera.position.set(0, 1, 5);
+      this.camera.position.set(0, 1.4, 5);
 
       this.scene.add(this.bottleModel);
 

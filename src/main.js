@@ -1,4 +1,4 @@
-import Scene from "./hidr8/hidr8two";
+import Scene from "./module2/particle";
 
 window.addEventListener("DOMContentLoaded", () => {
   const canvas = document.querySelector("canvas.webgl");

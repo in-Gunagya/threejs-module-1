@@ -68,11 +68,11 @@ export default class Engine {
 
   controls() {
     this.orbitControls = new OrbitControls(this.camera, this.canvas);
-    this.orbitControls.maxPolarAngle = Math.PI * 0.49;
-    this.orbitControls.maxDistance = 9;
-    this.orbitControls.minDistance = 3;
+    // this.orbitControls.maxPolarAngle = Math.PI * 0.49;
+    // this.orbitControls.maxDistance = 5;
+    // this.orbitControls.minDistance = 3;
     // this.orbitControls.enableRotate = false
-    // this.orbitControls.enableDamping = false;
+    this.orbitControls.enableDamping = true;
     // this.orbitControls.enablePan = false
   }
 
